@@ -142,6 +142,9 @@
         <pointsize>10</pointsize>
        </font>
       </property>
+      <property name="autoFillBackground">
+       <bool>true</bool>
+      </property>
       <property name="tabPosition">
        <enum>QTabWidget::West</enum>
       </property>
@@ -149,18 +152,27 @@
        <number>0</number>
       </property>
       <widget class="QWidget" name="hist1">
+       <property name="autoFillBackground">
+        <bool>true</bool>
+       </property>
        <attribute name="title">
         <string>Spectrum histogram 1</string>
        </attribute>
        <layout class="QGridLayout" name="hist1Layout"/>
       </widget>
       <widget class="QWidget" name="hist2">
+       <property name="autoFillBackground">
+        <bool>true</bool>
+       </property>
        <attribute name="title">
         <string>Spectrum histogram 2</string>
        </attribute>
        <layout class="QGridLayout" name="hist2Layout"/>
       </widget>
       <widget class="QWidget" name="scope">
+       <property name="autoFillBackground">
+        <bool>true</bool>
+       </property>
        <attribute name="title">
         <string>Oscilloscope</string>
        </attribute>

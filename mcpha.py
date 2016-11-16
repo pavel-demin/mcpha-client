@@ -26,11 +26,12 @@ matplotlib.use('Qt5Agg')
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.backends.backend_qt5agg import NavigationToolbar2QT as NavigationToolbar
 from matplotlib.figure import Figure
+from matplotlib.ticker import Formatter, FuncFormatter
 
 from PyQt5.uic import loadUiType
-from PyQt5.QtCore import QRegExp, QTimer
+from PyQt5.QtCore import Qt, QRegExp, QTimer
 from PyQt5.QtGui import QRegExpValidator, QPalette, QColor
-from PyQt5.QtWidgets import QApplication, QMainWindow, QMenu, QVBoxLayout, QSizePolicy, QMessageBox, QWidget
+from PyQt5.QtWidgets import QApplication, QMainWindow, QMenu, QVBoxLayout, QSizePolicy, QMessageBox, QWidget, QDialog, QFileDialog
 from PyQt5.QtNetwork import QAbstractSocket, QTcpSocket
 
 Ui_MCPHA, QMainWindow = loadUiType('mcpha.ui')
@@ -55,19 +56,43 @@ class MCPHAHist(QWidget, Ui_MCPHAHist):
   def __init__(self):
     super(MCPHAHist, self).__init__()
     self.setupUi(self)
+    # create figure
+    figure = Figure()
+    figure.set_facecolor('none')
+    self.axes = figure.add_subplot(111)
+    self.canvas = FigureCanvas(figure)
+    self.plotLayout.addWidget(self.canvas)
+    # create navigation toolbar
+    self.toolbar = NavigationToolbar(self.canvas, self.plotWidget, False)
+    # remove subplots action
+    actions = self.toolbar.actions()
+    self.toolbar.removeAction(actions[7])
+    self.plotLayout.addWidget(self.toolbar)
 
 class MCPHAScope(QWidget, Ui_MCPHAScope):
   def __init__(self):
     super(MCPHAScope, self).__init__()
     self.setupUi(self)
+    # create figure
+    figure = Figure()
+    figure.set_facecolor('none')
+    self.axes = figure.add_subplot(111)
+    self.canvas = FigureCanvas(figure)
+    self.plotLayout.addWidget(self.canvas)
+    # create navigation toolbar
+    self.toolbar = NavigationToolbar(self.canvas, self.plotWidget, False)
+    # remove subplots action
+    actions = self.toolbar.actions()
+    self.toolbar.removeAction(actions[7])
+    self.plotLayout.addWidget(self.toolbar)
     palette = QPalette(self.ch1Label.palette())
-    palette.setColor(QPalette.Background, QColor('yellow'))
+    palette.setColor(QPalette.Background, QColor('#FFAA00'))
     palette.setColor(QPalette.Foreground, QColor('black'))
     self.ch1Label.setAutoFillBackground(True)
     self.ch1Label.setPalette(palette)
     self.ch1Value.setAutoFillBackground(True)
     self.ch1Value.setPalette(palette)
-    palette.setColor(QPalette.Background, QColor('cyan'))
+    palette.setColor(QPalette.Background, QColor('#00CCCC'))
     palette.setColor(QPalette.Foreground, QColor('black'))
     self.ch2Label.setAutoFillBackground(True)
     self.ch2Label.setPalette(palette)
